@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        {% if request.resolver_match.url_name == 'check_eligibility' %}
+            Check Eligibility
+        {% endif %}
+        {% if request.resolver_match.url_name == 'create_loan' %}
+            Create Loan
+        {% endif %}
+        </title>
+</head>
+<body>
+    {% if request.resolver_match.url_name == 'check_eligibility' %}
+        <h2>Check Eligibility</h2>
+        <form method="get">
+            <label for="customer_id">Customer ID</label>
+            <input type="number" id="customer_id" name="customer_id"><br><br>
+            <label for="loan_amount">Loan Amount</label>
+            <input type="number" id="loan_amount" name="loan_amount" step="any"><br><br>
+            <label for="interest_rate">Interest Rate</label>
+            <input type="number" id="interest_rate" name="interest_rate" step="any"><br><br>
+            <label for="tenure">Tenure</label>
+            <input type="number" id="tenure" name="tenure" step="any"><br><br>
+            <input type="submit"></input>
+        </form>
+    {% endif %}
+
+    {% if request.resolver_match.url_name == 'create_loan' %}
+        <h2>Create Loan</h2>
+        <form method="POST">
+            {% csrf_token %}
+            <label for="customer_id">Customer ID</label>
+            <input type="number" id="customer_id" name="customer_id"><br><br>
+            <label for="loan_amount">Loan Amount</label>
+            <input type="number" id="loan_amount" name="loan_amount" step="any"><br><br>
+            <label for="interest_rate">Interest Rate</label>
+            <input type="number" id="interest_rate" name="interest_rate" step="any"><br><br>
+            <label for="tenure">Tenure</label>
+            <input type="number" id="tenure" name="tenure" step="any"><br><br>
+            <input type="submit"></input>
+        </form>
+    {% endif %}
+    
+</body>
+</html>

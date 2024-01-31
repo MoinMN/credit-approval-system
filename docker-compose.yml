@@ -1,0 +1,22 @@
+services:
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_DB= AlemenoDB
+      - POSTGRES_USER= alemeno
+      - POSTGRES_PASSWORD= alemeno
+
+  web:
+    build:
+      context: .
+    command: ["./wait-for-db.sh", "python", "manage.py", "runserver", "0.0.0.0:8000"]
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    environment:
+      - POSTGRES_DB= AlemenoDB
+      - POSTGRES_USER= alemeno
+      - POSTGRES_PASSWORD= alemeno
+    depends_on:
+      - db
