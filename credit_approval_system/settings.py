@@ -78,15 +78,11 @@ WSGI_APPLICATION = 'credit_approval_system.wsgi.application'
 
 DATABASES = {
     'default': {
-        # 'ENGINE': 'django.db.backends.postgresql',
-        # 'NAME': 'AlemenoDB',
-        # 'USER': 'alemeno',
-        # 'PASSWORD': 'alemeno',
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('POSTGRES_DB', 'AlemenoDB'),
-        'USER': os.environ.get('POSTGRES_USER', 'alemeno'),
-        'PASSWORD': os.environ.get('POSTGRES_PASSWORD', 'alemeno'),
-        'HOST': os.environ.get('DB_HOST', 'db'),
+        'NAME': 'CreditApprovalSys',
+        'USER': 'userAlemeno',
+        'PASSWORD': 'userAlemeno',
+        'HOST': 'db',
         'PORT': '5432',
     }
 }

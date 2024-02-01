@@ -159,10 +159,10 @@ def create_loan(request):
                 new_loan = Loan.objects.create(id=next_id, customer=customer, loan_amount=loan_amount, tenure=tenure, interest_rate=interest_rate, monthly_repayment=emi, emis_paid_on_time=0, start_date=date.today(), end_date=(date.today() + timedelta(days=tenure * 30)))
 
                 
-                res = f"Loan ID: <b>{new_loan.id}</b><br>Customer ID: <b>{new_loan.customer.id}</b><br>Loan Approved: <b>{True}</b><br>Message: Loan is Approved Successfuly with Interest Rate of {interest_rate}% <br>Monthly Installment: <b>Rs. {new_loan.monthly_repayment}</b>"
+                res = f"Loan ID: <b>{new_loan.id}</b><br>Customer ID: <b>{new_loan.customer.id}</b><br>Loan Approved: <b>{True}</b><br>Message: Loan is Approved Successfuly with Interest Rate of {interest_rate}% <br>Monthly Installment: <b>Rs. {round(new_loan.monthly_repayment, 2)}</b>"
 
                 return HttpResponse(res)
-            elif 50 > credit_score > 30:
+            elif 50 >= credit_score > 30:
                 emi = loan_amount * 0.12
                 emi += loan_amount
                 emi /= tenure
@@ -172,10 +172,10 @@ def create_loan(request):
 
                 new_loan = Loan.objects.create(id=next_id, customer=customer, loan_amount=loan_amount, tenure=tenure, interest_rate=12, monthly_repayment=emi, emis_paid_on_time=0, start_date=date.today(), end_date=(date.today() + timedelta(days=tenure * 30)))
 
-                res = f"Loan ID: <b>{new_loan.id}</b><br>Customer ID: <b>{new_loan.customer.id}</b><br>Loan Approved: <b>{True}</b><br>Message: Loan is Approved Successfuly with Interest Rate of 12% <br>Monthly Installment: <b>Rs. {new_loan.monthly_repayment}</b>"
+                res = f"Loan ID: <b>{new_loan.id}</b><br>Customer ID: <b>{new_loan.customer.id}</b><br>Loan Approved: <b>{True}</b><br>Message: Loan is Approved Successfuly with Interest Rate of 12% <br>Monthly Installment: <b>Rs. {round(new_loan.monthly_repayment, 2)}</b>"
 
                 return HttpResponse(res)
-            elif 30 > credit_score > 10:
+            elif 30 >= credit_score > 10:
                 emi = loan_amount * 0.16
                 emi += loan_amount
                 emi /= tenure
@@ -185,10 +185,10 @@ def create_loan(request):
 
                 new_loan = Loan.objects.create(id=next_id, customer=customer, loan_amount=loan_amount, tenure=tenure, interest_rate=16, monthly_repayment=emi, emis_paid_on_time=0, start_date=date.today(), end_date=(date.today() + timedelta(days=tenure * 30)))
 
-                res = f"Loan ID: <b>{new_loan.id}</b><br>Customer ID: <b>{new_loan.customer.id}</b><br>Loan Approved: <b>{True}</b><br>Message: Loan is Approved Successfuly with Interest Rate of 16% <br>Monthly Installment: <b>Rs. {new_loan.monthly_repayment}</b>"
+                res = f"Loan ID: <b>{new_loan.id}</b><br>Customer ID: <b>{new_loan.customer.id}</b><br>Loan Approved: <b>{True}</b><br>Message: Loan is Approved Successfuly with Interest Rate of 16% <br>Monthly Installment: <b>Rs. {round(new_loan.monthly_repayment, 2)}</b>"
 
                 return HttpResponse(res)
-            elif 10 > credit_score:
+            elif 10 >= credit_score:
                 res = f"Loan ID: <b>None</b><br>Customer ID: <b>{customer_id}</b><br>Loan Approved: <b>{False}</b><br>Message: You are not eligible for applying loan due to low credit score."
 
                 return HttpResponse(res)
@@ -197,6 +197,10 @@ def create_loan(request):
         except Customer.DoesNotExist:
             res = f"Customer ID {customer_id} Does Not Exist in database. Try with different ID"
             return HttpResponse(res)
+        
+        res = f"Loan ID: <b>None</b><br>Customer ID: <b>{customer_id}</b><br>Loan Approved: <b>{False}</b><br>Message: You are not eligible for applying loan. {credit_score}"
+
+        return HttpResponse(res)
 
     return render(request, 'check-create-loan.html')
 
@@ -213,7 +217,7 @@ def view_loan(request, loan_id):
         'age': loan.customer.age,
     }
 
-    res = f"Loan ID: <b>{loan.id}</b><br>Customer: <b>{cus_detail}</b><br>Loan Amount: <b>Rs. {loan.loan_amount}</b><br>Interest Rate: <b>{loan.interest_rate}%</b><br>Monthly Installment: <b>Rs. {loan.monthly_repayment}</b>"
+    res = f"Loan ID: <b>{loan.id}</b><br>Customer: <b>{cus_detail}</b><br>Loan Amount: <b>Rs. {round(loan.loan_amount, 2)}</b><br>Interest Rate: <b>{loan.interest_rate}%</b><br>Monthly Installment: <b>Rs. {round(loan.monthly_repayment, 2)}</b>"
 
     return HttpResponse(res)
 
